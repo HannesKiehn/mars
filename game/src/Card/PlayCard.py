@@ -4,7 +4,7 @@ from game.src.Move import Move
 
 
 if TYPE_CHECKING:
-    from game.src.Cards.Card import Card
+    from game.src.Card.Card import Card
     from game.src.Player import Player
 
 

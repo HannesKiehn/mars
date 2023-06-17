@@ -1,11 +1,11 @@
 from __future__ import annotations
 import random
 from typing import TYPE_CHECKING, List
-from game.src.PlayCard import PlayCard
+from game.src.Card.PlayCard import PlayCard
 
 if TYPE_CHECKING:
-    from game.src.Cards.Card import Card
-    from game.src.DeckOfCards import DeckOfCards
+    from game.src.Card.Card import Card
+    from game.src.Card.DeckOfCards import DeckOfCards
     from game.src.Move import Move
 
 

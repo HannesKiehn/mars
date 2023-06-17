@@ -25,4 +25,4 @@ class Card(ABC):
         pass
 
     def getPrice(self, player: Player) -> int:
-        return PriceService.calculatePrice(self, player)
+        return PriceService.calculateCardPrice(self, player)

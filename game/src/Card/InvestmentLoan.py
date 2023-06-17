@@ -1,5 +1,5 @@
 from __future__ import annotations
-from game.src.Cards.SimpleCard import SimpleCard
+from game.src.Card.SimpleCard import SimpleCard
 from game.src.Player import Player
 from game.src.Tag import Tag
 

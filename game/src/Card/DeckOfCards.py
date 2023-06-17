@@ -1,6 +1,6 @@
 from typing import List
-from game.src.Cards.Card import Card
-from game.src.Cards.InvestmentLoan import InvestmentLoan
+from game.src.Card.Card import Card
+from game.src.Card.InvestmentLoan import InvestmentLoan
 
 
 class DeckOfCards:

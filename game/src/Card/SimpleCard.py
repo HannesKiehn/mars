@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from ast import List
-from game.src.Cards.Card import Card
+from game.src.Card.Card import Card
 from game.src.Player import Player
 from game.src.Tag import Tag
 
