@@ -81,3 +81,22 @@ class RandomGameTestCase(TestCase):
         self.assertEqual(game.board.oxygen, 14)
         # self.assertEqual(game.board.getOceans(), 9)
         # self.assertEqual(game.board.temperature, 8)
+
+        self.assertTrue(game.players[0].cash >= 0)
+        self.assertTrue(game.players[1].cash >= 0)
+
+
+class EvalutationTestCase(TestCase):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    def testPlayEvaluatedGame(self):
+        from game.src.Game import Game
+        from game.src.Board.BoardType import BoardType
+        import time
+
+        t0 = time.time()
+        game = Game(2, BoardType.THARSIS)
+        game.playEvaluatedGame()
+        t1 = time.time()
+        print("Test took {}".format(t1 - t0))

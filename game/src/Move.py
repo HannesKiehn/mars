@@ -10,7 +10,8 @@ if TYPE_CHECKING:
 
 
 class Move(ABC):
-    def __init__(self) -> None:
+    def __init__(self, name: str) -> None:
+        self.name = name
         pass
 
     @abstractmethod

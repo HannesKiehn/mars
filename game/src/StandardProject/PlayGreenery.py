@@ -13,7 +13,7 @@ class PlayGreenery(Move):
     def __init__(self, row: int, column: int) -> None:
         self.row = row
         self.column = column
-        super().__init__()
+        super().__init__("Greenery")
 
     def play(self, game: Game):
         player = game.playerOnTurn

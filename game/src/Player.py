@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, List
 from game.src.Card.PlayCard import PlayCard
 from game.src.PassMove import PassMove
 from game.src.StandardProject.PlayGreenery import PlayGreenery
+from game.src.StandardProject.StandardProjectService import StandardProjectService
 
 if TYPE_CHECKING:
     from game.src.Card.Card import Card
@@ -15,7 +16,8 @@ if TYPE_CHECKING:
 
 
 class Player:
-    def __init__(self) -> None:
+    def __init__(self, id) -> None:
+        self.id = id
         self.terraforming = 20
         self.cash = 0
         self.steel = 0
@@ -46,11 +48,11 @@ class Player:
         move.play(game)
         pass
 
-    def getLegalMoves(self) -> List[Move]:
+    def getLegalMoves(self, game: Game) -> List[Move]:
         playableCards = self.getPlayableCards()
         passMove = PassMove()
-        greeneries = [PlayGreenery(0, 0)]
-        return playableCards + [passMove] + greeneries
+        sp = StandardProjectService.getPlayableStandardProjects(game)
+        return playableCards + [passMove] + sp
 
     def getPlayableCards(self) -> List[PlayCard]:
         playableCards: List[Card] = list(
@@ -59,12 +61,12 @@ class Player:
         return list(map(lambda card: PlayCard(card), playableCards))
 
     def playLegalMove(self, game: Game) -> None:
-        legalMoves: List[Move] = self.getLegalMoves()
+        legalMoves: List[Move] = self.getLegalMoves(game)
         move: Move = random.choice(legalMoves)
         move.play(game)
 
     def nextTurn(self) -> None:
-        self.cash += self.cashProd
+        self.cash += self.cashProd + self.terraforming
         self.steel += self.steelProd
         self.titanium += self.titaniumProd
         self.plants += self.PlantsProd

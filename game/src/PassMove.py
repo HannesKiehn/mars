@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class PassMove(Move):
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__("Pass")
 
     def play(self, game: Game) -> None:
         game.playerOnTurn.allowedToPlayInTurn = False
