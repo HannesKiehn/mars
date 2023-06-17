@@ -15,12 +15,18 @@ class CardPriceTestCase(TestCase):
     def testPlayerCanPlayInvestmentLoan(self):
         from game.src.Card.InvestmentLoan import InvestmentLoan
         from game.src.Player import Player
+        from game.src.Game import Game
+        from game.src.Board.BoardType import BoardType
+        from game.src.Card.PlayCard import PlayCard
 
-        player = Player(3)
+        game = Game(2, BoardType.THARSIS)
+        player = game.playerOnTurn
+        player.cash = 3
         player.cards = [InvestmentLoan()]
         moves = player.getLegalMoves()
-        self.assertEqual(len(moves), 1)
-        player.play(moves[0])
+        playLoan = list(filter(lambda move: isinstance(move, PlayCard), moves))[0]
+        self.assertEqual(len(moves), 2)
+        player.play(playLoan, game)
         self.assertEqual(player.cash, 10)
 
 
@@ -59,3 +65,19 @@ class BoardTestCase(TestCase):
         self.assertEqual(bonusPlants, 38)
         self.assertEqual(bonusTitanium, 4)
         self.assertEqual(bonusCards, 6)
+
+
+class RandomGameTestCase(TestCase):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    def testPlayRandomGame(self):
+        from game.src.Game import Game
+        from game.src.Board.BoardType import BoardType
+
+        game = Game(2, BoardType.THARSIS)
+        game.playRandomGame()
+
+        self.assertEqual(game.board.oxygen, 14)
+        # self.assertEqual(game.board.getOceans(), 9)
+        # self.assertEqual(game.board.temperature, 8)

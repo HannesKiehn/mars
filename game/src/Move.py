@@ -2,8 +2,11 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
     from game.src.Player import Player
+    from game.src.Board.Board import Board
+    from game.src.Game import Game
 
 
 class Move(ABC):
@@ -11,5 +14,5 @@ class Move(ABC):
         pass
 
     @abstractmethod
-    def play(player: Player) -> None:
+    def play(game: Game) -> None:
         pass

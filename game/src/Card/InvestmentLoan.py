@@ -1,14 +1,20 @@
 from __future__ import annotations
-from game.src.Card.SimpleCard import SimpleCard
-from game.src.Player import Player
+from typing import TYPE_CHECKING
+from game.src.Board.Board import Board
+from game.src.Card.Card import Card
 from game.src.Tag import Tag
 
+if TYPE_CHECKING:
+    from game.src.Game import Game
+    from game.src.Player import Player
 
-class InvestmentLoan(SimpleCard):
+
+class InvestmentLoan(Card):
     def __init__(self) -> None:
         super().__init__(3, [Tag.EARTH, Tag.EVENT])
 
-    def play(self, player: Player) -> None:
+    def play(self, game: Game) -> None:
+        player = game.playerOnTurn
         player.cash -= super().getPrice(player)
         player.cashProd -= 1
         player.cash += 10

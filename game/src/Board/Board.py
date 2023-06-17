@@ -90,3 +90,6 @@ class Board:
 
     def getOceans() -> int:
         pass
+
+    def isOxygenMaxed(self) -> bool:
+        return self.oxygen == 14

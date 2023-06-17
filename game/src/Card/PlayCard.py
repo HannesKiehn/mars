@@ -1,11 +1,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
+
 from game.src.Move import Move
 
 
 if TYPE_CHECKING:
     from game.src.Card.Card import Card
     from game.src.Player import Player
+    from game.src.Board.Board import Board
+    from game.src.Game import Game
 
 
 class PlayCard(Move):
@@ -13,5 +17,5 @@ class PlayCard(Move):
         self.card = card
         super().__init__()
 
-    def play(self, player: Player) -> None:
-        self.card.play(player)
+    def play(self, game: Game) -> None:
+        self.card.play(game)
