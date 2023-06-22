@@ -13,7 +13,6 @@ class CardPriceTestCase(TestCase):
         return super().setUp()
 
     def testPlayerCanPlayInvestmentLoan(self):
-        from game.src.Card.InvestmentLoan import InvestmentLoan
         from game.src.Player import Player
         from game.src.Game import Game
         from game.src.Board.BoardType import BoardType
@@ -22,8 +21,8 @@ class CardPriceTestCase(TestCase):
         game = Game(2, BoardType.THARSIS)
         player = game.playerOnTurn
         player.cash = 3
-        player.cards = [InvestmentLoan()]
-        moves = player.getLegalMoves()
+        player.cards = ["investmentLoan"]
+        moves = player.getLegalMoves(game)
         playLoan = list(filter(lambda move: isinstance(move, PlayCard), moves))[0]
         self.assertEqual(len(moves), 2)
         player.play(playLoan, game)

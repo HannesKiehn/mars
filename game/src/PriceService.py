@@ -1,5 +1,8 @@
 from __future__ import annotations
+from ast import List
 from typing import TYPE_CHECKING
+
+from game.src.Tag import Tag
 
 
 if TYPE_CHECKING:
@@ -11,8 +14,8 @@ class PriceService:
     def __init__(self) -> None:
         pass
 
-    def calculateCardPrice(card: Card, player: Player) -> int:
-        return card.basePrice
+    def calculateCardPrice(basePrice: int, tags: List[Tag], player: Player) -> int:
+        return basePrice
 
     def calculateCityPrice(player: Player) -> int:
         return 25

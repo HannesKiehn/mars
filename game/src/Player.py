@@ -1,11 +1,13 @@
 from __future__ import annotations
 import random
 from typing import TYPE_CHECKING, List
+from game.src.Card.Cards import Cards
 
 from game.src.Card.PlayCard import PlayCard
 from game.src.PassMove import PassMove
 from game.src.StandardProject.PlayGreenery import PlayGreenery
 from game.src.StandardProject.StandardProjectService import StandardProjectService
+
 
 if TYPE_CHECKING:
     from game.src.Card.Card import Card
@@ -13,6 +15,7 @@ if TYPE_CHECKING:
     from game.src.Move import Move
     from game.src.Game import Game
     from game.src.Board.Board import Board
+    from game.src.Tag import Tag
 
 
 class Player:
@@ -31,7 +34,8 @@ class Player:
         self.PlantsProd = 0
         self.powerProd = 0
         self.heatProd = 0
-        self.cards = []
+        self.cards = Cards.getAllCardIds()
+        self.victoryPoints = 0
 
         self.allowedToPlayInTurn = True
         pass
@@ -49,16 +53,22 @@ class Player:
         pass
 
     def getLegalMoves(self, game: Game) -> List[Move]:
-        playableCards = self.getPlayableCards()
+        playableCards = self.getPlayableCards(game)
         passMove = PassMove()
         sp = StandardProjectService.getPlayableStandardProjects(game)
         return playableCards + [passMove] + sp
 
-    def getPlayableCards(self) -> List[PlayCard]:
-        playableCards: List[Card] = list(
-            filter(lambda card: card.isPlayable(self), self.cards)
+    def getPlayableCards(self, game: Game) -> List[PlayCard]:
+        playCardList = []
+        playableCards: List[str] = list(
+            filter(lambda cardId: Cards.isPlayable(cardId, game), self.cards)
         )
-        return list(map(lambda card: PlayCard(card), playableCards))
+        for card in playableCards:
+            variations = Cards.getPlayableVariations(card, game)
+            playCardList += list(
+                map(lambda variation: PlayCard(card, variation), variations)
+            )
+        return playCardList
 
     def playLegalMove(self, game: Game) -> None:
         legalMoves: List[Move] = self.getLegalMoves(game)
@@ -74,3 +84,9 @@ class Player:
         self.heat += self.power
         self.power = self.powerProd
         self.allowedToPlayInTurn = True
+
+    def playTag(self, tag: Tag) -> None:
+        pass
+
+    def playTags(self, tags: List[Tag]) -> None:
+        pass

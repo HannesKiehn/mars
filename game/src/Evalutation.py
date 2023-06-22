@@ -44,16 +44,16 @@ class Evalutation:
 
     def getBestMoveWithPrint(game: Game) -> Move:
         moves: List[Move] = game.playerOnTurn.getLegalMoves(game)
-        scores = [Evalutation.evaluateMove(move, game) for move in moves]
         print(
             "\nThere are {} legal moves for player {}".format(
                 len(moves), game.playerOnTurn.id
             )
         )
-        for move in moves:
+        if len(moves) == 1:
             print(
-                "Move {} has an average score of {}".format(
-                    move.name, Evalutation.evaluateMove(move, game)
-                )
+                "Move {} is played, because it is the only move".format(moves[0].name)
             )
+        scores = [Evalutation.evaluateMove(move, game) for move in moves]
+        for index, move in enumerate(moves):
+            print("Move {} has an average score of {}".format(move.name, scores[index]))
         return moves[scores.index(max(scores))]
