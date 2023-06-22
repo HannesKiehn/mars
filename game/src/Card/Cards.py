@@ -11,6 +11,12 @@ if TYPE_CHECKING:
     from game.src.Game import Game
 
 
+# Stuff to model (TODO)
+# global requirements
+# card resources
+# rebates
+# actions
+# "unplaying" of actions for performance reasons
 class Cards:
     def __init__(self) -> None:
         pass
