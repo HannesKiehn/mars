@@ -6,6 +6,7 @@ import os
 from game.src.Card.BasePrice import BasePrice
 from game.src.Card.Tags import Tags
 from game.src.Corporation.Corporations import Corporations
+from game.src.StartingHand import StartingHand
 from game.src.Tag import Tag
 
 
@@ -287,3 +288,15 @@ class CorporationsTestCase(TestCase):
             Corporations.play(id, player)
             self.assertTrue(player.corporation is not None)
             self.assertTrue(player.cash > 0)
+
+
+class StartingHandTestCase(TestCase):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    def testStartinghand(self):
+        startingHand = StartingHand(2)
+        self.assertEqual(len(startingHand.corporations[0]), 2)
+        self.assertEqual(len(startingHand.corporations[1]), 2)
+        self.assertEqual(len(startingHand.cards[0]), 10)
+        self.assertEqual(len(startingHand.cards[1]), 10)

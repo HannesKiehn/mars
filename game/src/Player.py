@@ -34,7 +34,7 @@ class Player:
         self.PlantsProd = 0
         self.powerProd = 0
         self.heatProd = 0
-        self.cards = Cards.getAllCardIds()
+        self.cards = []
         self.victoryPoints = 0
         self.tags = {
             Tag.BUILDING: 0,

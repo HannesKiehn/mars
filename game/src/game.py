@@ -2,10 +2,12 @@ import random
 from typing import List
 from game.src.Board.Board import Board
 from game.src.Board.BoardType import BoardType
+from game.src.Card.DeckOfCards import DeckOfCards
 from game.src.Evalutation import Evalutation
 from game.src.Move import Move
 from game.src.Phase import Phase
 from game.src.Player import Player
+from game.src.StartingHand import StartingHand
 
 
 class Game:
@@ -19,6 +21,7 @@ class Game:
         for id in range(playerCount):
             self.players.append(Player(id))
         self.playerOnTurn = self.players[0]
+        self.deck = None
 
     def getPlayer(self, playerId: int) -> Player:
         player = next(filter(lambda player: player.id == playerId, self.players), None)
@@ -34,6 +37,8 @@ class Game:
         self.playerOnTurn = self.players[(index + 1) % self.playerCount]
 
     def playRandomGame(self):
+        startingHand = StartingHand(self.playerCount)
+        self.deck = DeckOfCards(startingHand)
         while not self.isTerraformed():
             while self.turnIsInProgress():
                 if self.playerOnTurn.allowedToPlayInTurn:

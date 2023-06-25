@@ -25,8 +25,39 @@ class Cards:
 
     @staticmethod
     def getAllCardIds():
-        basegame = ["releaseOfInertGases"]
-        coorporateEra = ["investmentLoan"]
+        basegame = [
+            "adaptedLichen",
+            "adaptionTechnology",
+            "advancedEcosystems",
+            "aerobrakedAmmoniaAsteroid",
+            "algae",
+            "ants",
+            "aquiferPumping",
+            "archaebacteria",
+            "arcticAlgae",
+            "artificialLake",
+            "artificialPhotosynthesis",
+            "asteroid",
+            "asteroidMining",
+            "beamFromAThoriumAsteroid",
+            "bigAsteroid",
+            "biomassCombustors",
+            "birds",
+            "blackPolarDust",
+            "breathingFilters",
+            "bushes",
+        ]
+        coorporateEra = [
+            "acquiredCompany",
+            "advancedAlloys",
+            "aiCentral",
+            "antiGravityTechnology",
+            "asteroidMiningConsortium",
+            "bribedCommitee",
+            "buildingIndustries",
+            "businessContacts",
+            "businessNetwork",
+        ]
         return basegame + coorporateEra
 
     @staticmethod
@@ -58,7 +89,7 @@ class Cards:
     def getPlayableVariations(cardId: str, game: Game) -> List[CardVariation]:
         match cardId:
             case "asteroid" | "bigAsteroid":
-                return Cards.getAllPlayersVariation()
+                return Cards.getAllPlayersVariation(game)
         return [CardVariation()]  # Default case for cards that have no variation
 
     @staticmethod
