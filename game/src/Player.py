@@ -7,7 +7,7 @@ from game.src.Card.PlayCard import PlayCard
 from game.src.PassMove import PassMove
 from game.src.StandardProject.PlayGreenery import PlayGreenery
 from game.src.StandardProject.StandardProjectService import StandardProjectService
-
+from game.src.Tag import Tag
 
 if TYPE_CHECKING:
     from game.src.Card.Card import Card
@@ -15,12 +15,12 @@ if TYPE_CHECKING:
     from game.src.Move import Move
     from game.src.Game import Game
     from game.src.Board.Board import Board
-    from game.src.Tag import Tag
 
 
 class Player:
     def __init__(self, id) -> None:
         self.id = id
+        self.corporation = None
         self.terraforming = 20
         self.cash = 0
         self.steel = 0
@@ -36,6 +36,19 @@ class Player:
         self.heatProd = 0
         self.cards = Cards.getAllCardIds()
         self.victoryPoints = 0
+        self.tags = {
+            Tag.BUILDING: 0,
+            Tag.SPACE: 0,
+            Tag.SCIENCE: 0,
+            Tag.PLANT: 0,
+            Tag.MICROBE: 0,
+            Tag.ANIMAL: 0,
+            Tag.POWER: 0,
+            Tag.JOVIAN: 0,
+            Tag.EARTH: 0,
+            Tag.CITY: 0,
+            Tag.EVENT: 0,
+        }
 
         self.allowedToPlayInTurn = True
         pass

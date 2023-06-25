@@ -5,6 +5,7 @@ import os
 
 from game.src.Card.BasePrice import BasePrice
 from game.src.Card.Tags import Tags
+from game.src.Corporation.Corporations import Corporations
 from game.src.Tag import Tag
 
 
@@ -272,3 +273,17 @@ class CardDataTestCase(TestCase):
 
         self.assertEqual(notags, 12)
         self.assertEqual(totalPrice, 87)
+
+
+class CorporationsTestCase(TestCase):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    def testAllCorpsCanBePlayed(self):
+        from game.src.Player import Player
+
+        for number, id in enumerate(Corporations.IDS):
+            player = Player(number)
+            Corporations.play(id, player)
+            self.assertTrue(player.corporation is not None)
+            self.assertTrue(player.cash > 0)
