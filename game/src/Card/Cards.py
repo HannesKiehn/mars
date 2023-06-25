@@ -1,6 +1,7 @@
 from __future__ import annotations
 from ast import List
 from typing import TYPE_CHECKING, Callable
+from game.src.Card.BasePrice import BasePrice
 
 from game.src.PriceService import PriceService
 
@@ -31,7 +32,7 @@ class Cards:
     def play(cardId: str, variation: CardVariation, game: Game):
         player = game.playerOnTurn
         tags = Cards.getTags(cardId)
-        basePrice = Cards.getBasePrice(cardId)
+        basePrice = BasePrice.getBasePrice(cardId)
         player.cash -= PriceService.calculateCardPrice(basePrice, tags, player)
         player.playTags(tags)
         player.cards.remove(cardId)
@@ -52,18 +53,10 @@ class Cards:
                 return [Tag.EVENT]
 
     @staticmethod
-    def getBasePrice(cardId: str):
-        match cardId:
-            case "investmentLoan":
-                return 3
-            case "releaseOfInertGases":
-                return 14
-
-    @staticmethod
     def isPlayable(cardId: str, game: Game):
         player = game.playerOnTurn
         tags = Cards.getTags(cardId)
-        basePrice = Cards.getBasePrice(cardId)
+        basePrice = BasePrice.getBasePrice(cardId)
         if player.cash < PriceService.calculateCardPrice(basePrice, tags, player):
             return False
         return True

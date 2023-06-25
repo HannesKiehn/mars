@@ -3,6 +3,8 @@ from django import setup
 
 import os
 
+from game.src.Card.BasePrice import BasePrice
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mars.settings")
 setup()
@@ -99,3 +101,15 @@ class EvalutationTestCase(TestCase):
         game.playEvaluatedGame()
         t1 = time.time()
         print("Test took {}".format(t1 - t0))
+
+
+class CardDataTestCase(TestCase):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    def testNumberOfCards(self):
+        # self.assertEqual(len(BasePrice.PRICES), 208)
+        totalPrice = 0
+        for price in BasePrice.PRICES.values():
+            totalPrice += price
+        self.assertEqual(totalPrice, 2501)
