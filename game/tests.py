@@ -4,6 +4,8 @@ from django import setup
 import os
 
 from game.src.Card.BasePrice import BasePrice
+from game.src.Card.Tags import Tags
+from game.src.Tag import Tag
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mars.settings")
@@ -108,8 +110,165 @@ class CardDataTestCase(TestCase):
         return super().setUp()
 
     def testNumberOfCards(self):
-        # self.assertEqual(len(BasePrice.PRICES), 208)
+        self.assertEqual(len(BasePrice.PRICES), 208)
+        self.assertEqual(len(Tags.TAGS), 208)
+
+    def testTotalPrice(self):
         totalPrice = 0
         for price in BasePrice.PRICES.values():
             totalPrice += price
-        self.assertEqual(totalPrice, 2501)
+        self.assertEqual(totalPrice, 2506)
+
+    def testBuildingCards(self):
+        buildingTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.BUILDING:
+                        buildingTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(buildingTags, 67)
+        self.assertEqual(totalPrice, 808)
+
+    def testSpaceCards(self):
+        spaceTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.SPACE:
+                        spaceTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(spaceTags, 42)
+        self.assertEqual(totalPrice, 852)
+
+    def testScienceCards(self):
+        scienceTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.SCIENCE:
+                        scienceTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+        totalPrice -= 11  # double counting of research
+        self.assertEqual(scienceTags, 34)
+        self.assertEqual(totalPrice, 339)
+
+    def testPlantCards(self):
+        plantTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.PLANT:
+                        plantTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(plantTags, 21)
+        self.assertEqual(totalPrice, 244)
+
+    def testMicrobeCards(self):
+        microbeTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.MICROBE:
+                        microbeTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(microbeTags, 16)
+        self.assertEqual(totalPrice, 139)
+
+    def testAnimalCards(self):
+        animalTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.ANIMAL:
+                        animalTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(animalTags, 9)
+        self.assertEqual(totalPrice, 97)
+
+    def testPowerCards(self):
+        plantTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.POWER:
+                        plantTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(plantTags, 27)
+        self.assertEqual(totalPrice, 275)
+
+    def testJovianCards(self):
+        plantTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.JOVIAN:
+                        plantTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(plantTags, 12)
+        self.assertEqual(totalPrice, 281)
+
+    def testEarthCards(self):
+        plantTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.EARTH:
+                        plantTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(plantTags, 22)
+        self.assertEqual(totalPrice, 272)
+
+    def testCityCards(self):
+        cityTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.CITY:
+                        cityTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(cityTags, 12)
+        self.assertEqual(totalPrice, 222)
+
+    def testEventCards(self):
+        eventTags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list):
+                for i in tagValue:
+                    if i == Tag.EVENT:
+                        eventTags += 1
+                        totalPrice += BasePrice.PRICES[tagKey]
+
+        self.assertEqual(eventTags, 37)
+        self.assertEqual(totalPrice, 476)
+
+    def testNoTagCards(self):
+        notags = 0
+        totalPrice = 0
+        for tagKey, tagValue in Tags.TAGS.items():
+            if isinstance(tagValue, list) and len(tagValue) == 0:
+                totalPrice += BasePrice.PRICES[tagKey]
+                notags += 1
+
+        self.assertEqual(notags, 12)
+        self.assertEqual(totalPrice, 87)
