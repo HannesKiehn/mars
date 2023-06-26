@@ -22,12 +22,14 @@ class Evalutation:
 
     @staticmethod
     def getPoints(playerId: int, game: Game) -> int:
+        if game.playerCount == 1:
+            return -game.turn  # Solo games favor less turns
         return Evalutation.getPointsForPlayer(game.getPlayer(playerId))
 
     @staticmethod
     def evaluateMove(move: Move, game: Game):
         playerId = game.playerOnTurn.id
-        N = 100
+        N = 10
         t0 = time.time()
         games: List[Game] = [copy.deepcopy(game) for _ in range(N)]
         t1 = time.time()

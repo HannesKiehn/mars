@@ -5,8 +5,10 @@ from game.src.Card.Cards import Cards
 
 from game.src.Card.PlayCard import PlayCard
 from game.src.PassMove import PassMove
+from game.src.PickCorporation import PickCorporation
 from game.src.StandardProject.PlayGreenery import PlayGreenery
 from game.src.StandardProject.StandardProjectService import StandardProjectService
+from game.src.StartingHand import StartingHand
 from game.src.Tag import Tag
 
 if TYPE_CHECKING:
@@ -49,6 +51,7 @@ class Player:
             Tag.CITY: 0,
             Tag.EVENT: 0,
         }
+        self.startingHand: StartingHand = None
 
         self.allowedToPlayInTurn = True
         pass
@@ -66,6 +69,11 @@ class Player:
         pass
 
     def getLegalMoves(self, game: Game) -> List[Move]:
+        if self.corporation is None:
+            return [
+                PickCorporation(corpId)
+                for corpId in self.startingHand.corporations[self.id]
+            ]
         playableCards = self.getPlayableCards(game)
         passMove = PassMove()
         sp = StandardProjectService.getPlayableStandardProjects(game)
@@ -87,6 +95,7 @@ class Player:
         legalMoves: List[Move] = self.getLegalMoves(game)
         move: Move = random.choice(legalMoves)
         move.play(game)
+        game.moves.append(move)
 
     def nextTurn(self) -> None:
         self.cash += self.cashProd + self.terraforming

@@ -3,6 +3,7 @@ from game.src.Card.Cards import Cards
 from game.src.Corporation.Corporations import Corporations
 
 
+# Change to single player? We need random setup for other players
 class StartingHand:
     CORPORATIONS_PER_PLAYER = 2
     CARDS_PER_PLAYER = 10

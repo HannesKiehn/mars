@@ -6,7 +6,7 @@ import os
 from game.src.Card.BasePrice import BasePrice
 from game.src.Card.Tags import Tags
 from game.src.Corporation.Corporations import Corporations
-from game.src.StartingHand import StartingHand
+
 from game.src.Tag import Tag
 
 
@@ -104,7 +104,17 @@ class EvalutationTestCase(TestCase):
         game = Game(2, BoardType.THARSIS)
         game.playEvaluatedGame()
         t1 = time.time()
+        print("Final turn: " + str(game.turn))
         print("Test took {}".format(t1 - t0))
+
+    def testStartingHandAnalysis(self):
+        from game.src.Game import Game
+        from game.src.Board.BoardType import BoardType
+        from game.src.GameEvaluation import GameEvaluation
+        from game.src.StartingHand import StartingHand
+
+        startingHand = StartingHand(1)
+        GameEvaluation.evaluateStartingHandSinglePlayer(startingHand)
 
 
 class CardDataTestCase(TestCase):

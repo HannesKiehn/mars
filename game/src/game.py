@@ -22,6 +22,8 @@ class Game:
             self.players.append(Player(id))
         self.playerOnTurn = self.players[0]
         self.deck = None
+        self.turn = 0
+        self.moves: List[Move] = []
 
     def getPlayer(self, playerId: int) -> Player:
         player = next(filter(lambda player: player.id == playerId, self.players), None)
@@ -36,8 +38,9 @@ class Game:
         index = self.players.index(self.playerOnTurn)
         self.playerOnTurn = self.players[(index + 1) % self.playerCount]
 
-    def playRandomGame(self):
-        startingHand = StartingHand(self.playerCount)
+    def playRandomGame(self, startingHand=None):
+        if startingHand is None:
+            startingHand = StartingHand(self.playerCount)
         self.deck = DeckOfCards(startingHand)
         while not self.isTerraformed():
             while self.turnIsInProgress():
@@ -46,15 +49,18 @@ class Game:
             self.nextTurn()
 
     # for testing purposes
-    def playEvaluatedGame(self):
+    def playEvaluatedGame(self, startingHand=None):
+        self.players[0].startingHand = startingHand
         while not self.isTerraformed():
             while self.turnIsInProgress():
                 if self.playerOnTurn.allowedToPlayInTurn:
                     bestMove = Evalutation.getBestMoveWithPrint(self)
                     bestMove.play(self)
+                    self.moves.append(bestMove)
             self.nextTurn()
 
     def nextTurn(self) -> None:
+        self.turn += 1
         for player in self.players:
             player.nextTurn()
 
